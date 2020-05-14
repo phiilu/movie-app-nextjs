@@ -12,7 +12,7 @@ class MyDocument extends Document {
         <Head />
         <body
           className="grid min-h-screen font-sans text-white bg-gray-900"
-          style={{ gridTemplateColumns: "auto 1fr auto" }}
+          style={{ gridTemplateRows: "auto 1fr auto" }}
         >
           <Main />
           <NextScript />
