@@ -1,0 +1,11 @@
+@tailwind base;
+
+@tailwind components;
+
+@tailwind utilities;
+
+@media (min-width: 768px) {
+  .bg-overlay {
+    background-color: rgba(0, 0, 0, 0.7) !important;
+  }
+}
