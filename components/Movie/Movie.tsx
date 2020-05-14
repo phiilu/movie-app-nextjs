@@ -1,6 +1,7 @@
 import React from "react";
 import Rating from "../Rating/Rating";
 
+// Movie on the homepage
 const Movie = ({
   id,
   title,
