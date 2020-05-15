@@ -1,5 +1,6 @@
 import React, { useEffect } from "react";
 import { GetServerSideProps } from "next";
+import Link from "next/link";
 import { useLayoutState } from "state/LayoutContext";
 import DataCache from "@util/DataCache";
 import api from "@api/index";
@@ -118,18 +119,20 @@ const MovieDetails = ({ movie }: Props) => {
           {credits.cast.map((cast) => {
             return (
               <div key={cast.name} className="mx-auto space-y-4">
-                <a href="/actors/{{this.id}}">
-                  <img
-                    loading="lazy"
-                    className="w-64 rounded md:w-full"
-                    src={
-                      cast.profile_path
-                        ? `https://image.tmdb.org/t/p/w500/${cast.profile_path}`
-                        : "https://dummyimage.com/500x750/cbd5e0/1a202c.png&text=Profile+Image+Not+Found"
-                    }
-                    alt={`${cast.name}'s profile image`}
-                  />
-                </a>
+                <Link href={`/actor/${cast.id}`}>
+                  <a>
+                    <img
+                      loading="lazy"
+                      className="w-64 rounded md:w-full"
+                      src={
+                        cast.profile_path
+                          ? `https://image.tmdb.org/t/p/w500/${cast.profile_path}`
+                          : "https://dummyimage.com/500x750/cbd5e0/1a202c.png&text=Profile+Image+Not+Found"
+                      }
+                      alt={`${cast.name}'s profile image`}
+                    />
+                  </a>
+                </Link>
                 <h2 className="text-lg">{cast.name}}</h2>
                 <small className="text-gray-400 text-md">
                   {cast.character}
