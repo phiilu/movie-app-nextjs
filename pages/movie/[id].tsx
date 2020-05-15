@@ -117,7 +117,7 @@ const MovieDetails = ({ movie }: Props) => {
         <div className="grid grid-cols-1 gap-8 mt-8 sm:grid-cols-2 md:grid-cols-4 lg:grid-cols-5">
           {credits.cast.map((cast) => {
             return (
-              <div className="mx-auto space-y-4">
+              <div key={cast.name} className="mx-auto space-y-4">
                 <a href="/actors/{{this.id}}">
                   <img
                     loading="lazy"
@@ -145,7 +145,7 @@ const MovieDetails = ({ movie }: Props) => {
         <div className="grid grid-cols-1 gap-8 mt-8 sm:grid-cols-2 md:grid-cols-3">
           {images.backdrops.map((image) => {
             return (
-              <div className="space-y-4">
+              <div key={image.file_path} className="space-y-4">
                 <img
                   loading="lazy"
                   className="transition ease-in-out rounded cursor-pointer hover:opacity-75"
