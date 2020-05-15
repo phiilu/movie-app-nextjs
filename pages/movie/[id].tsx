@@ -133,7 +133,7 @@ const MovieDetails = ({ movie }: Props) => {
                     />
                   </a>
                 </Link>
-                <h2 className="text-lg">{cast.name}}</h2>
+                <h2 className="text-lg">{cast.name}</h2>
                 <small className="text-gray-400 text-md">
                   {cast.character}
                 </small>
