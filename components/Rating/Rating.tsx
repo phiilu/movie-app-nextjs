@@ -1,6 +1,9 @@
-import React from "react";
+interface Props {
+  rating: number;
+  layout?: string;
+}
 
-const Rating = ({ rating, layout }) => {
+const Rating = ({ rating, layout }: Props) => {
   return (
     <div
       className={`flex ${
