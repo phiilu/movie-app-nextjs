@@ -18,16 +18,9 @@ const Footer = () => {
             Built with{" "}
             <a
               className="underline hover:text-gray-300"
-              href="https://expressjs.com/"
+              href="https://nextjs.org/"
             >
-              express.js
-            </a>{" "}
-            and{" "}
-            <a
-              className="underline hover:text-gray-300"
-              href="https://github.com/alpinejs/alpine"
-            >
-              alpine.js
+              next.js
             </a>
           </span>
           <span className="block">

@@ -1,42 +1,57 @@
 import React from "react";
+import Link from "next/link";
+import { useRouter } from "next/router";
 
 const Header = () => {
+  const router = useRouter();
+
   return (
     <header className="absolute top-0 left-0 right-0 z-20 ">
       <nav className="shadow-lg">
         <div className="container flex flex-col items-center justify-between px-4 py-6 mx-auto md:flex-row">
-          <a href="/" className="flex items-center space-x-2">
-            <svg className="w-8" fill="currentColor" viewBox="0 0 20 20">
-              <path d="M2 6a2 2 0 012-2h12a2 2 0 012 2v2a2 2 0 100 4v2a2 2 0 01-2 2H4a2 2 0 01-2-2v-2a2 2 0 100-4V6z"></path>
-            </svg>
-            <span className="text-2xl font-bold tracking-wide uppercase">
-              Phiflix
-            </span>
-          </a>
+          <Link href="/">
+            <a className={`flex items-center space-x-2`}>
+              <svg className="w-8" fill="currentColor" viewBox="0 0 20 20">
+                <path d="M2 6a2 2 0 012-2h12a2 2 0 012 2v2a2 2 0 100 4v2a2 2 0 01-2 2H4a2 2 0 01-2-2v-2a2 2 0 100-4V6z"></path>
+              </svg>
+              <span className="text-2xl font-bold tracking-wide uppercase">
+                Phiflix
+              </span>
+            </a>
+          </Link>
           <ul className="flex items-center flex-1 space-x-4 text-sm">
             <li className="mt-3 md:ml-16 md:mt-0">
-              <a
-                href="/"
-                className="tracking-wide uppercase hover:text-gray-300 {{#if active.movie}}font-bold text-orange-500{{/if}}"
-              >
-                Movies
-              </a>
+              <Link href="/">
+                <a
+                  className={`tracking-wide uppercase hover:text-gray-300  ${
+                    router.pathname === "/" && "font-bold text-orange-500"
+                  }`}
+                >
+                  Movies
+                </a>
+              </Link>
             </li>
             <li className="mt-3 md:ml-6 md:mt-0">
-              <a
-                href="/tv"
-                className="tracking-wide uppercase hover:text-gray-300 {{#if active.tv}}font-bold text-orange-500{{/if}}"
-              >
-                TV Shows
-              </a>
+              <Link href="/tv">
+                <a
+                  className={`tracking-wide uppercase hover:text-gray-300  ${
+                    router.pathname === "/tv" && "font-bold text-orange-500"
+                  }`}
+                >
+                  TV Shows
+                </a>
+              </Link>
             </li>
             <li className="mt-3 md:ml-6 md:mt-0">
-              <a
-                href="/actors"
-                className="tracking-wide uppercase hover:text-gray-300 {{#if active.actor}}font-bold text-orange-500{{/if}}"
-              >
-                Actors
-              </a>
+              <Link href="/actor">
+                <a
+                  className={`tracking-wide uppercase hover:text-gray-300  ${
+                    router.pathname === "/actor" && "font-bold text-orange-500"
+                  }`}
+                >
+                  Actors
+                </a>
+              </Link>
             </li>
           </ul>
           <div className="relative z-50 mt-3 md:mt-0">

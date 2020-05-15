@@ -2,49 +2,48 @@ import React from "react";
 import Link from "next/link";
 
 import Rating from "@components/Rating/Rating";
-import { IMovie } from "types";
+import { ITV } from "types";
 
 interface Props {
-  movie: IMovie;
+  tv: ITV;
   isLast: boolean;
 }
 
-// Movie on the homepage
-const Movie = ({
-  movie: {
+const Tv = ({
+  tv: {
     id,
-    title,
+    name,
     short_title,
     poster_path,
-    release_date,
     vote_average,
+    release_date,
     genres,
   },
   isLast,
 }: Props) => {
   return (
     <div className={`mt-8 space-y-2 ${isLast && "pr-8 md:pr-0"}`}>
-      <Link href={`/movie/${id}`}>
+      <Link href={`/tv/${id}`}>
         <a>
           <h2
-            title={title}
-            className="text-xl text-center text-gray-600 truncate hover:text-gray-500 sm:text-left"
+            title={name}
+            className="text-xl text-gray-600 truncate hover:text-gray-500"
           >
             {short_title}
           </h2>
         </a>
       </Link>
-      <Link href={`/movie/${id}`}>
+      <Link href={`/tv/${id}`}>
         <a className="block w-48 sm:w-auto sm:h-auto">
           <img
             className="object-contain w-full rounded"
             src={poster_path}
-            alt={title}
+            alt={name}
           />
         </a>
       </Link>
       <div
-        className="grid items-center h-16"
+        className="grid items-center h-20"
         style={{ gridTemplateColumns: "1fr 2fr" }}
       >
         <Rating rating={vote_average} />
@@ -59,4 +58,4 @@ const Movie = ({
   );
 };
 
-export default Movie;
+export default Tv;
