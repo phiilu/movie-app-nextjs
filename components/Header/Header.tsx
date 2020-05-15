@@ -2,9 +2,8 @@ import React from "react";
 import Link from "next/link";
 import { useRouter } from "next/router";
 
-const Header = () => {
+const Header = ({ site }) => {
   const router = useRouter();
-
   return (
     <header className="absolute top-0 left-0 right-0 z-20 ">
       <nav className="shadow-lg">
@@ -66,7 +65,11 @@ const Header = () => {
             </div>
             <input
               type="search"
-              className="w-64 px-4 py-1 pl-8 text-sm bg-gray-800 rounded-full focus:outline-none focus:shadow-outline"
+              className={`w-64 px-4 py-1 pl-8 text-sm ${
+                site === "show"
+                  ? "bg-gray-800 md:bg-transparent"
+                  : "bg-gray-800"
+              } rounded-full focus:outline-none focus:shadow-outline`}
               placeholder="Search"
             />
           </div>

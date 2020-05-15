@@ -11,6 +11,9 @@ export interface IMovie {
   videos: IVideos;
   credits: ICredits;
   vote_average: number;
+  trailer: string;
+  tagline: string;
+  images: IImage;
 }
 
 export interface ITV {
@@ -71,4 +74,16 @@ export interface ICast {
   first_air_date?: string;
   character: string;
   media_type: string;
+}
+
+export interface IGenre {
+  name: string;
+}
+
+export interface IImage {
+  backdrops: Array<IBackdrop>;
+}
+
+export interface IBackdrop {
+  file_path: string;
 }

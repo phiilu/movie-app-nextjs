@@ -1,8 +1,12 @@
 import React from "react";
 
-const Rating = ({ rating }) => {
+const Rating = ({ rating, layout }) => {
   return (
-    <div className="flex flex-col items-center">
+    <div
+      className={`flex ${
+        layout === "row" ? "flex-row" : "flex-col"
+      } items-center`}
+    >
       <svg
         fill="currentColor"
         viewBox="0 0 20 20"
