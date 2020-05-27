@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useRef } from "react";
 import { GetServerSideProps } from "next";
 import Link from "next/link";
 import { useLayoutState } from "state/LayoutContext";
@@ -31,8 +31,17 @@ interface Props {
 
 const MovieDetails = ({ movie }: Props) => {
   const { setLayoutState } = useLayoutState();
+  const singleRef = useRef(null);
+  const singleHeaderRef = useRef(null);
+
   useEffect(() => {
     setLayoutState((prev) => ({ ...prev, site: "show" }));
+
+    if (singleRef.current && singleHeaderRef.current) {
+      singleRef.current.style.height =
+        singleHeaderRef.current.offsetHeight + "px";
+    }
+
     return () => setLayoutState((prev) => ({ ...prev, site: "index" }));
   }, []);
 
@@ -91,7 +100,7 @@ const MovieDetails = ({ movie }: Props) => {
                   <span>{release_date}</span>
                   <span className="hidden md:block">|</span>
                   <span style={{ gridColumn: "1 / -1" }}>
-                    {genres.map((g: IGenre) => g.name).join(",")}
+                    {genres.map((g: IGenre) => g.name).join(", ")}
                   </span>
                 </div>
               </div>

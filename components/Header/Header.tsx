@@ -23,7 +23,9 @@ const Header = ({ site }) => {
               <Link href="/">
                 <a
                   className={`tracking-wide uppercase hover:text-gray-300  ${
-                    router.pathname === "/" && "font-bold text-orange-500"
+                    (router.pathname === "/" ||
+                      router.pathname.includes("/movie")) &&
+                    "font-bold text-orange-500"
                   }`}
                 >
                   Movies
@@ -34,7 +36,8 @@ const Header = ({ site }) => {
               <Link href="/tv">
                 <a
                   className={`tracking-wide uppercase hover:text-gray-300  ${
-                    router.pathname === "/tv" && "font-bold text-orange-500"
+                    router.pathname.includes("/tv") &&
+                    "font-bold text-orange-500"
                   }`}
                 >
                   TV Shows
@@ -45,7 +48,8 @@ const Header = ({ site }) => {
               <Link href="/actor">
                 <a
                   className={`tracking-wide uppercase hover:text-gray-300  ${
-                    router.pathname === "/actor" && "font-bold text-orange-500"
+                    router.pathname.includes("/actor") &&
+                    "font-bold text-orange-500"
                   }`}
                 >
                   Actors

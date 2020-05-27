@@ -100,7 +100,7 @@ function getKnownForMovies(cast: Array<ICast>) {
     title: c.title || c.name,
     poster_path: c.poster_path,
     popularity: c.popularity,
-    link: c.media_type === "movie" ? `/movies/${c.id}` : `/tv/${c.id}`,
+    link: c.media_type === "movie" ? `/movie/${c.id}` : `/tv/${c.id}`,
   }));
 }
 
@@ -136,7 +136,7 @@ function getCredits(cast: Array<ICast>) {
       releaseYear: c.release_date
         ? new Date(c.release_date).getFullYear()
         : "Unknown",
-      link: c.media_type === "movie" ? `/movies/${c.id}` : `/tv/${c.id}`,
+      link: c.media_type === "movie" ? `/movie/${c.id}` : `/tv/${c.id}`,
     };
   });
 }
