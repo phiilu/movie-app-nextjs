@@ -1,22 +1,35 @@
 import React, { useEffect, useRef } from "react";
-import { GetServerSideProps } from "next";
+import { GetStaticProps } from "next";
 import Link from "next/link";
 import { useLayoutState } from "state/LayoutContext";
 import DataCache from "@util/DataCache";
 import api from "@api/index";
-import { transformSingleActor } from "@util/transform";
+import { transformSingleActor, transformActor } from "@util/transform";
 import { IGenre } from "types";
 import Rating from "@components/Rating/Rating";
 
+const popularActorCache = new DataCache(api.popularActors, false, 10);
 const actorCache = new DataCache(api.actor, true);
 
-export const getServerSideProps: GetServerSideProps = async ({
-  params: { id },
-}) => {
+export const getStaticProps: GetStaticProps = async ({ params: { id } }) => {
   const actorResponse = await actorCache.getData(id);
   const actor = transformSingleActor(actorResponse);
 
-  return { props: { actor } };
+  return { props: { actor }, revalidate: 3600 };
+};
+
+export const getStaticPaths = async () => {
+  const popularActorResponse = await popularActorCache.getData();
+  const popularActors = popularActorResponse.results.map(transformActor);
+
+  const paths = popularActors.map((actor) => ({
+    params: { id: `${actor.id}` },
+  }));
+
+  return {
+    paths,
+    fallback: true,
+  };
 };
 
 const ActorDetail = ({ actor }) => {

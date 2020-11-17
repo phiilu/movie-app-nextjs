@@ -1,5 +1,5 @@
 import React from "react";
-import { GetServerSideProps } from "next";
+import { GetStaticProps } from "next";
 
 import api from "@api/index";
 import Tv from "@components/Tv/Tv";
@@ -11,7 +11,7 @@ const genresCache = new DataCache(api.genres, false, 60 * 24);
 const popularTvCache = new DataCache(api.popularTv, false, 10);
 const topRatedTvCache = new DataCache(api.topRatedTv, false, 10);
 
-export const getServerSideProps: GetServerSideProps = async () => {
+export const getStaticProps: GetStaticProps = async () => {
   const [
     genresResponse,
     popularTvResponse,
@@ -26,7 +26,7 @@ export const getServerSideProps: GetServerSideProps = async () => {
   const popularTv = popularTvResponse.results.map(transformTv(genres));
   const topRatedTv = topRatedTvResponse.results.map(transformTv(genres));
 
-  return { props: { popularTv, topRatedTv } };
+  return { props: { popularTv, topRatedTv }, revalidate: 3600 };
 };
 
 const TvIndex = ({ popularTv, topRatedTv }) => {

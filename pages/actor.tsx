@@ -1,5 +1,5 @@
 import React from "react";
-import { GetServerSideProps } from "next";
+import { GetStaticProps } from "next";
 
 import api from "@api/index";
 import Actor from "@components/Actor/Actor";
@@ -9,11 +9,11 @@ import { IActor } from "types";
 
 const popularActorCache = new DataCache(api.popularActors, false, 10);
 
-export const getServerSideProps: GetServerSideProps = async () => {
+export const getStaticProps: GetStaticProps = async () => {
   const popularActorResponse = await popularActorCache.getData();
   const popularActors = popularActorResponse.results.map(transformActor);
 
-  return { props: { popularActors } };
+  return { props: { popularActors }, revalidate: 3600 };
 };
 
 interface Props {

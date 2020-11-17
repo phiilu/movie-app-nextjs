@@ -1,5 +1,5 @@
 import React, { useEffect, useRef } from "react";
-import { GetServerSideProps } from "next";
+import { GetStaticProps } from "next";
 import Link from "next/link";
 import { useLayoutState } from "state/LayoutContext";
 import DataCache from "@util/DataCache";
@@ -8,12 +8,12 @@ import { transformMovie } from "@util/transform";
 import { IMovie, IGenre } from "types";
 import Rating from "@components/Rating/Rating";
 
+const popularMoviesCache = new DataCache(api.popularMovies, false, 10);
+const nowPlayingMoviesCache = new DataCache(api.nowPlayingMovies, false, 10);
 const genresCache = new DataCache(api.genres, false, 60 * 24);
 const movieCache = new DataCache(api.movie);
 
-export const getServerSideProps: GetServerSideProps = async ({
-  params: { id },
-}) => {
+export const getStaticProps: GetStaticProps = async ({ params: { id } }) => {
   const [genresResponse, movieResponse] = await Promise.all([
     genresCache.getData(),
     movieCache.getData(id),
@@ -22,8 +22,38 @@ export const getServerSideProps: GetServerSideProps = async ({
   const genres = [...movieGenres.genres, ...tvGenres.genres];
   const movie = movieResponse ? transformMovie(genres)(movieResponse) : null;
 
-  return { props: { movie } };
+  return { props: { movie }, revalidate: 3600 };
 };
+
+export async function getStaticPaths() {
+  const [
+    genresResponse,
+    popularMoviesResponse,
+    nowPlayingMoviesResponse,
+  ] = await Promise.all([
+    genresCache.getData(),
+    popularMoviesCache.getData(),
+    nowPlayingMoviesCache.getData(),
+  ]);
+  const [movieGenres, tvGenres] = genresResponse;
+  const genres = [...movieGenres.genres, ...tvGenres.genres];
+
+  const popularMovies = popularMoviesResponse.results.map(
+    transformMovie(genres)
+  );
+  const nowPlayingMovies = nowPlayingMoviesResponse.results.map(
+    transformMovie(genres)
+  );
+
+  const paths = [...popularMovies, ...nowPlayingMovies].map((movie) => ({
+    params: { id: `${movie.id}` },
+  }));
+
+  return {
+    paths,
+    fallback: true,
+  };
+}
 
 interface Props {
   movie: IMovie;

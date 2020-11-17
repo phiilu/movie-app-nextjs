@@ -1,4 +1,4 @@
-import { GetServerSideProps } from "next";
+import { GetStaticProps } from "next";
 
 import api from "@api/index";
 import Meta from "@components/Meta/Meta";
@@ -11,7 +11,7 @@ const genresCache = new DataCache(api.genres, false, 60 * 24);
 const popularMoviesCache = new DataCache(api.popularMovies, false, 10);
 const nowPlayingMoviesCache = new DataCache(api.nowPlayingMovies, false, 10);
 
-export const getServerSideProps: GetServerSideProps = async () => {
+export const getStaticProps: GetStaticProps = async () => {
   const [
     genresResponse,
     popularMoviesResponse,
@@ -30,7 +30,7 @@ export const getServerSideProps: GetServerSideProps = async () => {
   const nowPlayingMovies = nowPlayingMoviesResponse.results.map(
     transformMovie(genres)
   );
-  return { props: { popularMovies, nowPlayingMovies } };
+  return { props: { popularMovies, nowPlayingMovies }, revalidate: 3600 };
 };
 
 export default function Home({ popularMovies, nowPlayingMovies }) {

@@ -1,23 +1,49 @@
 import React, { useEffect, useRef } from "react";
-import { GetServerSideProps } from "next";
+import { GetStaticProps } from "next";
 import Link from "next/link";
 import { useLayoutState } from "state/LayoutContext";
 import DataCache from "@util/DataCache";
 import api from "@api/index";
-import { transformSingleTv } from "@util/transform";
+import { transformSingleTv, transformTv } from "@util/transform";
 import { IGenre } from "types";
 import Rating from "@components/Rating/Rating";
 
 const tvCache = new DataCache(api.tv);
+const genresCache = new DataCache(api.genres, false, 60 * 24);
+const popularTvCache = new DataCache(api.popularTv, false, 10);
+const topRatedTvCache = new DataCache(api.topRatedTv, false, 10);
 
-export const getServerSideProps: GetServerSideProps = async ({
-  params: { id },
-}) => {
+export const getStaticProps: GetStaticProps = async ({ params: { id } }) => {
   const tvResponse = await tvCache.getData(id);
   const tv = transformSingleTv(tvResponse);
 
-  return { props: { tv } };
+  return { props: { tv }, revalidate: true };
 };
+
+export async function getStaticPaths() {
+  const [
+    genresResponse,
+    popularTvResponse,
+    topRatedTvResponse,
+  ] = await Promise.all([
+    genresCache.getData(),
+    popularTvCache.getData(),
+    topRatedTvCache.getData(),
+  ]);
+  const [movieGenres, tvGenres] = genresResponse;
+  const genres = [...movieGenres.genres, ...tvGenres.genres];
+  const popularTv = popularTvResponse.results.map(transformTv(genres));
+  const topRatedTv = topRatedTvResponse.results.map(transformTv(genres));
+
+  const paths = [...popularTv, ...topRatedTv].map((tv) => ({
+    params: { id: `${tv.id}` },
+  }));
+
+  return {
+    paths,
+    fallback: true,
+  };
+}
 
 const TvDetails = ({ tv }) => {
   const { setLayoutState } = useLayoutState();
