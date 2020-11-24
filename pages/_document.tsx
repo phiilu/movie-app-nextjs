@@ -1,3 +1,4 @@
+import Scripts from "@components/Scripts/Scripts";
 import Document, { Html, Head, Main, NextScript } from "next/document";
 
 class MyDocument extends Document {
@@ -15,6 +16,7 @@ class MyDocument extends Document {
           style={{ gridTemplateRows: "auto 1fr auto" }}
         >
           <Main />
+          <Scripts />
           <NextScript />
         </body>
       </Html>

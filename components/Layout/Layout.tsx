@@ -21,12 +21,6 @@ const Layout = ({ children }) => {
       >
         {children}
       </main>
-      <script
-        async
-        defer
-        data-domain="nextjs.phiflix.com"
-        src="https://p.phiilu.com/js/plausible.js"
-      ></script>
       <Footer />
     </>
   );
