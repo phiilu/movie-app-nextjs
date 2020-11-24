@@ -1,6 +1,6 @@
 # Movie App - PHIFLIX
 
-https://movies.nextjs.kapfenberger.me/
+https://nextjs.phiflix.com
 
 ## Stack
 
